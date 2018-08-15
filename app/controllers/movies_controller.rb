@@ -40,8 +40,12 @@ class MoviesController < ApplicationController
     isWatchlist = false
 
     if current_user
-      isFavorite = current_user.movies.where('is_favorite = 1 AND movie_id = ?', @movie.id).count > 0
-      isWatchlist = current_user.movies.where('is_watchlist = 1 AND movie_id = ?', @movie.id).count > 0
+      isFavorite = current_user.movies.where({ 
+        user_movies: { is_favorite: true, movie_id: @movie.id } 
+      }).count > 0
+      isWatchlist = current_user.movies.where({
+        user_movies: { is_watchlist: true, movie_id: @movie.id } 
+      }).count > 0
     end
 
     render react_component: 'MoviePage', props: { movie: @movie_hash, currentUser: current_user, isFavorite: isFavorite, isWatchlist: isWatchlist }

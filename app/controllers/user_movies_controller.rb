@@ -10,7 +10,7 @@ class UserMoviesController < ApplicationController
     @page_title = ''
 
     if type == 'watchlist'
-      @movies = @user.movies.where('is_watchlist = 1')
+      @movies = @user.movies.where({ user_movies: { is_watchlist: true } })
       if @user == current_user
         @page_title = 'Your Watchlist'
       else
@@ -22,7 +22,7 @@ class UserMoviesController < ApplicationController
       else
         @page_title = "#{@user.name.split(' ')[0]}'s Favorites"
       end
-      @movies = @user.movies.where('is_favorite = 1')
+      @movies = @user.movies.where({ user_movies: { is_favorite: true } })
     end
   end
 
