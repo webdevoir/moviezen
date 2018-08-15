@@ -24,13 +24,10 @@ const CastCarousel = ({ cast }) => (
   >
     {cast.map(castMember => (
       <CastMember key={castMember.id}>
-        {castMember.person.profile_url && (
-          <img
-            src={castMember.person.profile_url}
-            alt={castMember.person.name}
-          />
+        {castMember.profile_url && (
+          <img src={castMember.profile_url} alt={castMember.name} />
         )}
-        {castMember.person.name} <br />
+        {castMember.name} <br />
         as <em>{castMember.character}</em>
       </CastMember>
     ))}

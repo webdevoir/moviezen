@@ -184,21 +184,21 @@ class MoviePage extends Component {
                 <strong>Directed by:</strong>{' '}
                 {movie.directors
                   .slice(0, 2)
-                  .map(d => d.person.name)
+                  .map(d => d.name)
                   .join(', ')}
               </p>
               <p className="mb-1">
                 <strong>Starring:</strong>{' '}
                 {movie.cast
                   .slice(0, 4)
-                  .map(c => c.person.name)
+                  .map(c => c.name)
                   .join(', ')}
               </p>
               <p className="mb-1">
                 <strong>Written by:</strong>{' '}
                 {movie.writers
                   .slice(0, 2)
-                  .map(w => w.person.name)
+                  .map(w => w.name)
                   .join(', ')}
               </p>
               <p className="mb-1">

@@ -4,7 +4,7 @@ module MoviesHelper
     tmdb = Tmdb.new
     omdb = Omdb.new
     tmdb_image_prefix = 'https://image.tmdb.org/t/p/'
-    tmdb_movie = tmdb.movie(tmdb_id, 'credits,release_dates,videos')
+    tmdb_movie = tmdb.movie(tmdb_id, 'release_dates,videos')
     if tmdb_movie.key?('status_code')
       return nil
     end
@@ -101,56 +101,57 @@ module MoviesHelper
       end
     end
 
-    credits = tmdb_movie['credits']
-    cast = credits['cast']
-    crew = credits['crew']
+    # Storing cast and crew
+    # credits = tmdb_movie['credits']
+    # cast = credits['cast']
+    # crew = credits['crew']
 
-    unless cast.nil?
-      cast.each do |cast_member|
-        person = Person.find_or_initialize_by(tmdb_id: cast_member['id'])
-        person.name = cast_member['name']
-        profile_path = cast_member['profile_path']
+    # unless cast.nil?
+    #   cast.each do |cast_member|
+    #     person = Person.find_or_initialize_by(tmdb_id: cast_member['id'])
+    #     person.name = cast_member['name']
+    #     profile_path = cast_member['profile_path']
 
-        unless profile_path.nil?
-          person.profile_url = tmdb_image_prefix + 'w185' + profile_path
-        end
+    #     unless profile_path.nil?
+    #       person.profile_url = tmdb_image_prefix + 'w185' + profile_path
+    #     end
 
-        person.save
+    #     person.save
 
-        credit_id = cast_member['credit_id']
+    #     credit_id = cast_member['credit_id']
 
-        Credit.where(credit_id: credit_id).first_or_create do |credit|
-          credit.character = cast_member['character']
-          credit.cast_id = cast_member['cast_id']
-          credit.order = cast_member['order']
-          credit.person = person
-          credit.movie = movie
-        end
-      end
-    end
+    #     Credit.where(credit_id: credit_id).first_or_create do |credit|
+    #       credit.character = cast_member['character']
+    #       credit.cast_id = cast_member['cast_id']
+    #       credit.order = cast_member['order']
+    #       credit.person = person
+    #       credit.movie = movie
+    #     end
+    #   end
+    # end
 
-    unless crew.nil?
-      crew.each do |crew_member|
-        person = Person.find_or_initialize_by(tmdb_id: crew_member['id'])
-        person.name = crew_member['name']
-        profile_path = crew_member['profile_path']
+    # unless crew.nil?
+    #   crew.each do |crew_member|
+    #     person = Person.find_or_initialize_by(tmdb_id: crew_member['id'])
+    #     person.name = crew_member['name']
+    #     profile_path = crew_member['profile_path']
 
-        unless profile_path.nil?
-          person.profile_url = tmdb_image_prefix + 'w185' + profile_path
-        end
+    #     unless profile_path.nil?
+    #       person.profile_url = tmdb_image_prefix + 'w185' + profile_path
+    #     end
 
-        person.save
+    #     person.save
 
-        credit_id = crew_member['credit_id']
+    #     credit_id = crew_member['credit_id']
 
-        Credit.where(credit_id: credit_id).first_or_create do |credit|
-          credit.department = crew_member['department']
-          credit.job = crew_member['job']
-          credit.person = person
-          credit.movie = movie
-        end
-      end
-    end
+    #     Credit.where(credit_id: credit_id).first_or_create do |credit|
+    #       credit.department = crew_member['department']
+    #       credit.job = crew_member['job']
+    #       credit.person = person
+    #       credit.movie = movie
+    #     end
+    #   end
+    # end
 
     return movie
   end

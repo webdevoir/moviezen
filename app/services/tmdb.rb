@@ -20,4 +20,9 @@ class Tmdb
     options = { query: { api_key: @api_key, query: q } }
     self.class.get("/search/movie", options)
   end
+
+  def movie_credits(movie_id)
+    options = { query: { api_key: @api_key } }
+    self.class.get("/movie/#{movie_id}/credits", options)
+  end
 end

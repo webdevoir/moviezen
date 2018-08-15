@@ -4,7 +4,7 @@ class MoviesController < ApplicationController
   def show
     slug = params[:id]
     tmdb_id = slug.split('-')[0]
-    @movie = Movie.includes(:people).where(tmdb_id: tmdb_id).first
+    @movie = Movie.find_by(tmdb_id: tmdb_id)
     if @movie.nil?
       @movie = save_tmdb_movie(tmdb_id)
       if @movie.nil?
@@ -20,15 +20,25 @@ class MoviesController < ApplicationController
     cast = []
     directors = []
     writers = []
-    @movie.credits.each do |credit|
-      credit_person = credit.attributes
-      credit_person[:person] = credit.person
-      if !credit.cast_id.nil?
-        cast.push(credit_person)
-      elsif credit.department == 'Directing'
-        directors.push(credit_person)
-      elsif credit.department == 'Writing'
-        writers.push(credit_person) 
+
+    tmdb = Tmdb.new
+    credits = tmdb.movie_credits(tmdb_id)
+    profile_base_url = 'https://image.tmdb.org/t/p/w185'
+    if credits.key?('cast')
+      cast = credits['cast']
+      cast.each do |c|
+        profile_path = c['profile_path']
+        c['profile_url'] = profile_path.nil? ? '' : profile_base_url + profile_path
+      end
+    end
+    if credits.key?('crew')
+      credits['crew'].each do |crew_member|
+        department = crew_member['department']
+        if department == 'Directing'
+          directors.push(crew_member)
+        elsif department == 'Writing'
+          writers.push(crew_member)
+        end
       end
     end
 

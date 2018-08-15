@@ -12,54 +12,45 @@
 
 ActiveRecord::Schema.define(version: 2018_08_14_212226) do
 
-  create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "categories", force: :cascade do |t|
     t.string "title"
     t.string "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "categories_movies", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "movie_id", null: false
-    t.bigint "category_id", null: false
+  create_table "categories_movies", id: false, force: :cascade do |t|
+    t.integer "movie_id", null: false
+    t.integer "category_id", null: false
   end
 
-  create_table "credits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "credits", force: :cascade do |t|
     t.integer "cast_id"
     t.string "credit_id"
     t.string "character"
     t.integer "order"
     t.string "department"
     t.string "job"
-    t.bigint "person_id"
-    t.bigint "movie_id"
+    t.integer "person_id"
+    t.integer "movie_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["movie_id"], name: "index_credits_on_movie_id"
     t.index ["person_id"], name: "index_credits_on_person_id"
   end
 
-  create_table "favorites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "movie_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["movie_id"], name: "index_favorites_on_movie_id"
-    t.index ["user_id"], name: "index_favorites_on_user_id"
-  end
-
-  create_table "genres", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "genres", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "genres_movies", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "movie_id", null: false
-    t.bigint "genre_id", null: false
+  create_table "genres_movies", id: false, force: :cascade do |t|
+    t.integer "movie_id", null: false
+    t.integer "genre_id", null: false
   end
 
-  create_table "movies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "movies", force: :cascade do |t|
     t.string "title"
     t.integer "year"
     t.integer "tmdb_id"
@@ -82,7 +73,7 @@ ActiveRecord::Schema.define(version: 2018_08_14_212226) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "people", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "people", force: :cascade do |t|
     t.string "name"
     t.string "profile_url"
     t.string "slug"
@@ -91,18 +82,18 @@ ActiveRecord::Schema.define(version: 2018_08_14_212226) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "user_movies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "user_movies", force: :cascade do |t|
     t.boolean "is_favorite"
     t.boolean "is_watchlist"
-    t.bigint "user_id"
-    t.bigint "movie_id"
+    t.integer "user_id"
+    t.integer "movie_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["movie_id"], name: "index_user_movies_on_movie_id"
     t.index ["user_id"], name: "index_user_movies_on_user_id"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "profile_url"
@@ -121,10 +112,4 @@ ActiveRecord::Schema.define(version: 2018_08_14_212226) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "credits", "movies"
-  add_foreign_key "credits", "people"
-  add_foreign_key "favorites", "movies"
-  add_foreign_key "favorites", "users"
-  add_foreign_key "user_movies", "movies"
-  add_foreign_key "user_movies", "users"
 end
