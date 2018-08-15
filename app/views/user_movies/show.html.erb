@@ -1,0 +1,17 @@
+<div class="container text-center">
+  <h2 class="page-header mb-5"><%= @page_title %></h2>
+  <% unless @movies.empty? %>
+    <div class="row">
+      <% @movies.each do |movie| %>
+        <div class="col-md-3 mb-4">
+          <a href="/movies/<%= movie.slug %>" class="movie-thumb link-normal">
+            <img class="img-fluid" src="<%= movie.poster_url %>" alt="<%= movie.title %>">
+            <%= movie.title %>
+          </a>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <h3 class="text-muted font-weight-light">Nothing here yet.</h3>
+  <% end %>
+</div>

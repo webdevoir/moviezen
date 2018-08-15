@@ -1,0 +1,12 @@
+<div class="container my-5">
+  <% @categories.each do |category|
+      movies = category.movies
+      if category.slug == 'upcoming'
+        movies = category.movies.order(release_date: :desc)
+      end
+  %>
+    <h4 class="mb-4"><%= category.title %></h4>
+    <%= react_component('MovieCarousel', movies: movies) %>
+    <hr>
+  <% end %>
+</div>
