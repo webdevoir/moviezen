@@ -1,24 +1,5 @@
-# README
+# moviezen
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+moviezen is a web app where you can explore movies, search, favorite and add movies to your watchlist. Built with Ruby on Rails + React.js and uses TMDB/OMDB api for movie data.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Check out the live site here: https://moviezen.herokuapp.com/
