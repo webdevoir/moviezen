@@ -10,6 +10,7 @@ import Trailer from '../components/trailer'
 import formatDate from '../utils/formatDate'
 import axios from 'axios'
 import CastCarousel from './cast_carousel'
+import tomatoIcon from '../assets/tomato-icon'
 
 class MoviePage extends Component {
   constructor(props) {
@@ -113,10 +114,7 @@ class MoviePage extends Component {
                       className="rating"
                       data-tip="Tomatometer"
                     >
-                      <img
-                        className="tomato-icon"
-                        src="/assets/icons8-tomato-50.png"
-                      />
+                      <img className="tomato-icon" src={tomatoIcon} />
                       <span className="rating-num">
                         {movie.tomato_rating}
                         <small>%</small>
