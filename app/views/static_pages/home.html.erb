@@ -1,7 +1,7 @@
 <div class="container my-5">
   <% @categories.each do |category|
       movies = category.movies
-      if category.slug == 'upcoming'
+      if category.slug == 'upcoming' || category.slug == 'now_playing'
         movies = category.movies.order(release_date: :desc)
       end
   %>
